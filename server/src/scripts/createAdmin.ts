@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { User } from '../models/User';
+import User, { IUser } from '../models/User';
 import path from 'path';
 
 // .env dosyasının yolunu doğru şekilde belirt

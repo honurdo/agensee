@@ -1,0 +1,92 @@
+.
+├── client
+│   ├── public
+│   │   └── index.html
+│   └── src
+│       ├── App.css
+│       ├── App.test.tsx
+│       ├── App.tsx
+│       ├── components
+│       │   ├── EditTaskDialog.tsx
+│       │   ├── auth
+│       │   │   ├── LoginForm.tsx
+│       │   │   └── RegisterForm.tsx
+│       │   ├── common
+│       │   │   ├── ConfirmDialog.tsx
+│       │   │   ├── StatsCard.tsx
+│       │   │   └── TableSettings.tsx
+│       │   ├── customers
+│       │   │   ├── BulkActions.tsx
+│       │   │   ├── CustomerForm.tsx
+│       │   │   ├── CustomerStats.tsx
+│       │   │   └── config
+│       │   │       └── columns.tsx
+│       │   ├── layout
+│       │   │   └── DashboardLayout.tsx
+│       │   ├── payments
+│       │   │   └── AddPaymentForm.tsx
+│       │   ├── tasks
+│       │   │   ├── TaskFilters.tsx
+│       │   │   ├── TaskForm.tsx
+│       │   │   └── TaskStats.tsx
+│       │   └── users
+│       │       └── UserForm.tsx
+│       ├── context
+│       │   └── AuthContext.tsx
+│       ├── dashboard
+│       │   ├── DashboardStats.tsx
+│       │   └── KanbanBoard.tsx
+│       ├── hooks
+│       ├── index.css
+│       ├── index.tsx
+│       ├── pages
+│       │   ├── Customers.tsx
+│       │   ├── Dashboard.tsx
+│       │   ├── Payments.tsx
+│       │   └── Users.tsx
+│       ├── react-app-env.d.ts
+│       ├── reportWebVitals.ts
+│       ├── routes
+│       │   └── Routes.tsx
+│       ├── services
+│       │   ├── authService.ts
+│       │   ├── axiosConfig.ts
+│       │   ├── customerService.ts
+│       │   ├── paymentService.ts
+│       │   ├── taskService.ts
+│       │   └── userService.ts
+│       ├── setupTests.ts
+│       ├── types
+│       │   ├── customer.ts
+│       │   ├── payment.ts
+│       │   ├── table.ts
+│       │   ├── task.ts
+│       │   └── user.ts
+│       └── utils
+└── server
+    ├── config
+    └── src
+        ├── app.ts
+        ├── controllers
+        │   ├── authController.ts
+        │   ├── customerController.ts
+        │   ├── taskController.ts
+        │   └── userController.ts
+        ├── middleware
+        │   └── authMiddleware.ts
+        ├── models
+        │   ├── Customer.ts
+        │   ├── Task.ts
+        │   └── User.ts
+        ├── routes
+        │   ├── authRoutes.ts
+        │   ├── customerRoutes.ts
+        │   ├── taskRoutes.ts
+        │   └── userRoutes.ts
+        ├── scripts
+        │   └── createAdmin.ts
+        ├── types
+        │   └── express.d.ts
+        └── utils
+
+31 directories, 59 files

@@ -1,15 +1,26 @@
-// server/src/controllers/authController.ts
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
+import UserModel, { IUser, UserRole } from '../models/User';
+
+// Token oluşturma fonksiyonu
+const generateToken = (user: IUser): string => {
+    return jwt.sign(
+      {
+        id: user._id,
+        userId: user._id,
+        role: user.role as UserRole // Role'ü UserRole enum'u olarak belirtiyoruz
+      },
+      process.env.JWT_SECRET || 'default-secret',
+      { expiresIn: '24h' }
+    );
+  };  
 
 class AuthController {
     async register(req: Request, res: Response): Promise<void> {
         try {
-            const { email, password, name, company } = req.body;
+            const { email, password, firstName, lastName, role } = req.body;
 
-            // Email kontrolü
-            const existingUser = await User.findOne({ email });
+            const existingUser = await UserModel.findOne({ email });
             if (existingUser) {
                 res.status(400).json({ 
                     message: 'Bu email adresi zaten kullanılıyor' 
@@ -17,22 +28,17 @@ class AuthController {
                 return;
             }
 
-            // Yeni kullanıcı oluştur
-            const user = new User({
+            const user = new UserModel({
                 email,
                 password,
-                name,
-                company
+                firstName,
+                lastName,
+                role
             });
 
             await user.save();
 
-            // Token oluştur
-            const token = jwt.sign(
-                { userId: user._id },
-                process.env.JWT_SECRET || 'default-secret',
-                { expiresIn: '24h' }
-            );
+            const token = generateToken(user);
 
             res.status(201).json({
                 message: 'Kayıt başarılı',
@@ -40,8 +46,8 @@ class AuthController {
                 user: {
                     id: user._id,
                     email: user.email,
-                    name: user.name,
-                    company: user.company,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     role: user.role
                 }
             });
@@ -58,8 +64,7 @@ class AuthController {
         try {
             const { email, password } = req.body;
 
-            // Kullanıcıyı bul
-            const user = await User.findOne({ email });
+            const user = await UserModel.findOne({ email });
             if (!user) {
                 res.status(401).json({ 
                     message: 'Geçersiz email veya şifre' 
@@ -67,7 +72,6 @@ class AuthController {
                 return;
             }
 
-            // Şifreyi kontrol et
             const isValidPassword = await user.comparePassword(password);
             if (!isValidPassword) {
                 res.status(401).json({ 
@@ -76,12 +80,11 @@ class AuthController {
                 return;
             }
 
-            // Token oluştur
-            const token = jwt.sign(
-                { userId: user._id },
-                process.env.JWT_SECRET || 'default-secret',
-                { expiresIn: '24h' }
-            );
+            const token = generateToken(user);
+
+            // Son giriş tarihini güncelle
+            user.lastLogin = new Date();
+            await user.save();
 
             res.json({
                 message: 'Giriş başarılı',
@@ -89,8 +92,8 @@ class AuthController {
                 user: {
                     id: user._id,
                     email: user.email,
-                    name: user.name,
-                    company: user.company,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     role: user.role
                 }
             });

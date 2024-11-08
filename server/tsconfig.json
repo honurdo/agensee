@@ -15,8 +15,9 @@
     "emitDecoratorMetadata": true,
     "sourceMap": true,
     "declaration": true,
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "types": ["node", "express"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../client/src/components/customers/config/column.ts"],
   "exclude": ["node_modules", "dist"]
 }
